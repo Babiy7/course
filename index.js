@@ -4,4 +4,4 @@ const y = u => {
    const x = 0;
 };
 
-console.log();
+console.log('sds');
