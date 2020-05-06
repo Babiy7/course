@@ -1,5 +1,15 @@
-const money = prompt('Ваш бюджет на месяц?'),
+let money, time;
+
+function start() {
+   money = prompt('Ваш бюджет на месяц?');
    time = prompt('Введите дату в формате YYYY-MM-DD');
+
+   while (isNaN(money) || !money) {
+      money = +prompt('Ваш бюджет на месяц?');
+   }
+}
+
+// start();
 
 const appData = {
    budget: money,
@@ -7,27 +17,61 @@ const appData = {
    expenses: {},
    optionalExpenses: {},
    income: [],
-   savings: false,
+   savings: true,
+   detectDayBudget() {
+      return Math.floor(this.budget / 30);
+   },
+   detectLevel() {
+      if (this.moneyPerDay < 100) {
+         return 'Мінімальний рівень прибутку';
+      }
+      if (this.moneyPerDay <= 500) {
+         return 'Середній рівень прибутку';
+      }
+      if (this.moneyPerDay >= 500) {
+         return 'Високий рівень прибутку';
+      }
+   },
 };
 
-for (let i = 0; i < 2; i++) {
-   const a = prompt('Введите обязательную статью расходов в этом месяце', ''),
-      b = prompt('Во сколько обойдется?', '');
-   console.log(a);
-   if (a && b && a.length < 20 && b.length < 20) {
-      appData.expenses[a] = b;
-   } else {
+function chooseExpenses() {
+   [1, 2].forEach(_ => {
+      const a = prompt('Введите обязательную статью расходов в этом месяце', ''),
+         b = prompt('Во сколько обойдется?', '');
+
+      if (a && b && a.length < 20 && b.length < 20) {
+         appData.expenses[a] = b;
+      }
+   });
+}
+
+// chooseExpenses();
+
+function chooseOptExpenses() {
+   [1, 2, 3].forEach(num => {
+      const choose = prompt('Статья необязательных расходов?');
+
+      appData.optionalExpenses[num] = choose;
+   });
+}
+
+// chooseOptExpenses();
+
+// appData.moneyPerDay = appData.detectDayBudget();
+
+// alert(`бюджет на день: ${appData.moneyPerDay}`);
+
+// console.log(appData.detectLevel());
+
+function checkSaving() {
+   if (appData.savings) {
+      const save = +prompt('Яка сума депозиту?'),
+         percent = +prompt('Який відсоток?');
+
+      appData.monthIncome = +((percent * save) / 100 / 12).toFixed(1);
+
+      alert(`Дохід з депозиту: ${appData.monthIncome}грн`);
    }
 }
 
-appData.moneyPerDay = Math.floor(appData.budget / 30);
-
-alert(`бюджет на день: ${appData.moneyPerDay}`);
-
-if (appData.moneyPerDay < 100) {
-   console.log('Мінімальний рівень прибутку');
-} else if (appData.moneyPerDay <= 500) {
-   console.log('Середній рівень прибутку');
-} else if (appData.moneyPerDay >= 500) {
-   console.log('Високий рівень прибутку');
-}
+checkSaving();
