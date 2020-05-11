@@ -1,0 +1,47 @@
+$orange: #ff964b;
+$container: #f5f5f5;
+
+$font-size: 14px !default;
+
+@mixin input($width) {
+   width: $width;
+   padding: 10px;
+   margin-left: 5px;
+   margin-bottom: 10px;
+   outline: none;
+   border: none;
+   border-radius: 3px;
+
+   background: white;
+   color: #a7a7a7;
+
+   box-shadow: 1px 1px 5px rgba($color: #000000, $alpha: 0.2);
+}
+
+@mixin button($fontSize, $paddingSide) {
+   padding: 10px ($paddingSide * 1px);
+   margin: 10px;
+   outline: none;
+   border: none;
+   border-radius: 3px;
+
+   background: $orange;
+   color: white;
+
+   font-size: $fontSize * 1px;
+
+   cursor: pointer;
+   box-shadow: 1px 1px 5px rgba($color: #000000, $alpha: 0.2);
+}
+
+@mixin title($top, $bottom) {
+   $px: 1px;
+   $top: $top * $px;
+   $bottom: $bottom * $px;
+
+   margin-top: $top;
+   margin-bottom: $bottom;
+
+   font-size: 14px;
+   font-weight: 500;
+}

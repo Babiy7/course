@@ -7,9 +7,9 @@
 
    "plugins": ["prettier"],
    "rules": {
-      "no-unused-vars": "off",
+      "no-unused-vars": "warn",
       "no-console": "off",
-      "no-shadow": "error",
+      "no-shadow": "off",
       "no-alert": "off",
       "no-plusplus": "off",
       "one-var": "off",

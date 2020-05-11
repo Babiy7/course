@@ -1,11 +1,119 @@
 <!DOCTYPE html>
-<html lang="en">
-   <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Document</title>
-   </head>
-   <body>
-      <script src="index.js"></script>
-   </body>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Apple</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="./sass/index.css" />
+    </head>
+    <body>
+        <header class="header">
+            <div class="logo">
+                <div class="left">Money</div>
+                <div class="right">keeper</div>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="title">Розрахунок денного б'юджету</div>
+
+            <div class="content">
+                <div class="main">
+                    <div class="budget-container">
+                        <div class="budget-title">Введіть б'джет</div>
+                        <input type="text" class="budget-item" placeholder="Б'юджет" />
+                        <button id="budget-btn">Затвердити</button>
+                    </div>
+                    <div class="choose-expenses">
+                        <div class="choose-title">
+                            Введіть обовязкові витрати
+                        </div>
+
+                        <input class="choose-item" type="text" placeholder="Назва" />
+                        <input class="choose-item" type="text" placeholder="Ціна" />
+                        <br />
+                        <input class="choose-item" type="text" placeholder="Назва" />
+                        <input class="choose-item" type="text" placeholder="Ціна" />
+
+                        <br />
+                        <button class="choose-item-btn">Затвердити</button>
+                    </div>
+
+                    <div class="optionalexpenses">
+                        <div class="optionalexpenses-title">
+                            Введіть необовязкові витрати
+                        </div>
+
+                        <input type="text" class="optionalexpenses-item" />
+                        <input type="text" class="optionalexpenses-item" />
+                        <input type="text" class="optionalexpenses-item" />
+
+                        <br />
+
+                        <button class="optionalexpenses-item-btn">Затвердити</button>
+                    </div>
+
+                    <div class="count-budget">
+                        <div class="count-budget-title">Розрахунок денного бюджету</div>
+                        <button class="count-budget-btn">Розрахувати</button>
+                    </div>
+
+                    <div class="choose-income">
+                        <div class="choose-income-title">
+                            Введіть можливий додатковий дохід через кому
+                        </div>
+                        <input type="text" class="choose-income-item" />
+                    </div>
+
+                    <div class="checksavings">
+                        Є накопичення:
+                        <input id="savings" type="checkbox" />
+                    </div>
+
+                    <div class="savings">
+                        <label for="id">Сума:</label>
+                        <input class="choose-sum" type="text" id="sum" />
+                        <label for="percent">Процент:</label>
+                        <input class="choose-percent" type="text" id="percent" />
+                    </div>
+
+                    <button class="start" id="start">Почати розрахувати</button>
+                </div>
+
+                <div class="result">
+                    <div class="result-table">
+                        <div class="budget items">Доход:</div>
+                        <div class="budget-value"></div>
+
+                        <div class="daybudget items">Бюджет на 1 день:</div>
+                        <div class="daybudget-value"></div>
+
+                        <div class="level items">Уровень дохода:</div>
+                        <div class="level-value"></div>
+
+                        <div class="expenses items">Обязательные расходы:</div>
+                        <div class="expenses-value"></div>
+
+                        <div class="optionalexpenses items">Возможные траты:</div>
+                        <div class="optionalexpenses-value"></div>
+
+                        <div class="income items">Дополнительный доход:</div>
+                        <div class="income-value"></div>
+
+                        <div class="monthsavings items">Накопления за 1 месяц:</div>
+                        <div class="monthsavings-value"></div>
+
+                        <div class="yearsavings items">Накопления за 1 год:</div>
+                        <div class="yearsavings-value"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/index.js"></script>
+    </body>
 </html>
