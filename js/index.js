@@ -27,8 +27,8 @@ const optInputs = [item1, item2, item3];
 const appData = {
     budget: money,
     timeData: time,
-    expenses: { зал: 2000, стрижка: 300 },
-    optionalExpenses: { 1: 'nozbe', 2: 'taxi' },
+    expenses: {},
+    optionalExpenses: {},
     income: [],
     savings: false,
     moneyPerDay: 0,
@@ -101,6 +101,7 @@ const appData = {
 budgetBtn.addEventListener('click', () => {
     appData.budget = +budgetInp.value;
     budgetInp.value = '';
+    budgetInp.classList.remove('error-input');
 });
 
 expensesBtn.addEventListener('click', () => {
@@ -113,6 +114,10 @@ expensesBtn.addEventListener('click', () => {
     price1.value = '';
     name2.value = '';
     price2.value = '';
+
+    inputs.slice(0, inputs.length - 1).forEach(input => {
+        input.classList.remove('error-input');
+    });
 
     appData.chooseExpenses(expenses);
 });

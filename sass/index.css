@@ -313,6 +313,10 @@ body {
   font-weight: 500;
 }
 
+.container .content .result .result-table .items:first-child {
+  margin-top: 0;
+}
+
 .error-input {
   border: #fc6565 solid !important;
   background: #fc8282 !important;
