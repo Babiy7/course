@@ -1,15 +1,13 @@
-let money, time;
-
-const startBtn = document.getElementById('start'),
-    budget = document.querySelector('.budget-value'),
-    daybudget = document.querySelector('.daybudget-value'),
-    level = document.querySelector('.level-value'),
-    expenses = document.querySelector('.expenses-value'),
-    optionalExpenses = document.querySelector('.optionalexpenses-value'),
-    income = document.querySelector('.income-value'),
-    monthSavings = document.querySelector('.monthsavings-value'),
-    yearSavings = document.querySelector('.yearsavings-value'),
-    budgetInp = document.querySelector('.budget-item');
+const startBtn = document.getElementById('start');
+const budget = document.querySelector('.budget-value');
+const daybudget = document.querySelector('.daybudget-value');
+const level = document.querySelector('.level-value');
+const expenses = document.querySelector('.expenses-value');
+const optionalExpenses = document.querySelector('.optionalexpenses-value');
+const income = document.querySelector('.income-value');
+const monthSavings = document.querySelector('.monthsavings-value');
+const yearSavings = document.querySelector('.yearsavings-value');
+const budgetInp = document.querySelector('.budget-item');
 
 const [name1, price1, name2, price2] = document.getElementsByClassName('choose-item');
 const [budgetBtn, expensesBtn, optionalExpensesBtn, countBudgetBtn] = document.getElementsByTagName(
@@ -25,8 +23,8 @@ const inputs = [name1, name2, price1, price2, budgetInp];
 const optInputs = [item1, item2, item3];
 
 const appData = {
-    budget: money,
-    timeData: time,
+    budget: 0,
+    time: null,
     expenses: {},
     optionalExpenses: {},
     income: [],
@@ -53,11 +51,12 @@ const appData = {
     },
 
     chooseExpenses(expenses) {
-        expenses.forEach(expense => {
-            const [name, price] = expense;
+        for (let i = 0; i < expenses.length; i++) {
+            const name = expenses[i].value;
+            const price = +expenses[++i].value;
 
             appData.expenses[name] = price;
-        });
+        }
     },
 
     chooseOptExpenses(optionalExpenses) {
@@ -65,18 +64,6 @@ const appData = {
             optionalExpenses.forEach((expense, i) => {
                 appData.optionalExpenses[++i] = expense.value;
             });
-        }
-    },
-
-    showBudgetPerDay() {
-        alert(`бюджет на день: ${appData.moneyPerDay}`);
-    },
-
-    checkSaving(save, percent) {
-        if (this.savings) {
-            const year = +((percent * save) / 100);
-            appData.monthIncome = (year / 12).toFixed(1);
-            appData.yearIncome = year.toFixed(1);
         }
     },
 
@@ -101,38 +88,33 @@ const appData = {
 budgetBtn.addEventListener('click', () => {
     appData.budget = +budgetInp.value;
     budgetInp.value = '';
+
+    budget.textContent = `${appData.budget}грн`;
     budgetInp.classList.remove('error-input');
 });
 
 expensesBtn.addEventListener('click', () => {
-    const expenses = [
-        [name1.value, +price1.value],
-        [name2.value, +price2.value],
-    ];
-
-    name1.value = '';
-    price1.value = '';
-    name2.value = '';
-    price2.value = '';
-
     inputs.slice(0, inputs.length - 1).forEach(input => {
         input.classList.remove('error-input');
     });
 
-    appData.chooseExpenses(expenses);
+    appData.chooseExpenses(document.getElementsByClassName('choose-item'));
+    expenses.textContent = `${Object.values(appData.expenses).reduce(
+        (prev, next) => prev + next,
+    )}грн`;
+    helper.clearInput(null, [name1, name2, price1, price2]);
 });
 
 optionalExpensesBtn.addEventListener('click', () => {
-    let optionalExpenses = [];
+    let optionalExpensesArr = [];
     if (item1.value || item2.value || item3.value) {
-        optionalExpenses = optInputs.filter(input => input.value);
-        appData.chooseOptExpenses(optionalExpenses);
+        optionalExpensesArr = optInputs.filter(input => input.value);
+        appData.chooseOptExpenses(optionalExpensesArr);
 
-        optInputs.forEach(input => {
-            input.value = '';
-        });
+        helper.clearInput(null, optInputs);
+        optionalExpenses.innerHTML = Object.values(appData.optionalExpenses).join(', ');
     } else {
-        optionalExpenses = null;
+        optionalExpensesArr = null;
     }
 });
 
@@ -142,17 +124,10 @@ countBudgetBtn.addEventListener('click', () => {
         Object.keys(appData.expenses).join('') &&
         Object.values(appData.expenses).join('')
     ) {
-        budget.innerHTML = `${appData.budget}грн`;
         daybudget.innerHTML = `${(appData.moneyPerDay = appData.detectDayBudget())}грн`;
         level.innerHTML = appData.detectLevel();
-        expenses.innerHTML = Object.keys(appData.expenses).join(', ');
-        optionalExpenses.innerHTML = Object.values(appData.optionalExpenses).join(', ');
 
-        if (inputs[0].classList.contains('error-input')) {
-            inputs.forEach(input => {
-                input.classList.remove('error-input');
-            });
-        }
+        helper.removeClasses('error-input');
     } else {
         inputs.forEach(input => {
             input.classList.add('error-input');
@@ -167,15 +142,46 @@ savings.addEventListener('click', e => {
 startBtn.addEventListener('click', () => {
     income.innerHTML = appData.chooseIncome(incomeItem.value).join(', ');
 
-    appData.checkSaving(sum.value, percent.value);
-
-    incomeItem.value = '';
-    sum.value = '';
-    percent.value = '';
+    appData.time = helper.date();
 
     if (appData.savings) {
+        calculate();
+    }
+
+    helper.clearInput(null, [incomeItem, sum, percent]);
+});
+
+function calculate() {
+    if (sum.value.trim() && percent.value.trim()) {
+        const year = +((sum.value * percent.value) / 100);
+        appData.monthIncome = (year / 12).toFixed(1);
+        appData.yearIncome = year.toFixed(1);
         monthSavings.innerHTML = `${appData.monthIncome}грн`;
         yearSavings.innerHTML = `${appData.yearIncome}грн`;
-        savings.checked = false;
     }
-});
+}
+
+const helper = {
+    date() {
+        const now = new Date();
+        return now.toLocaleDateString();
+    },
+
+    removeClasses(inputs, removeClass) {
+        if (inputs[0].classList.contains(removeClass)) {
+            inputs.forEach(input => {
+                input.classList.remove(removeClass);
+            });
+        }
+    },
+
+    clearInput(input, inputs) {
+        if (input) {
+            input.value = '';
+        } else {
+            inputs.forEach(input => {
+                input.value = '';
+            });
+        }
+    },
+};

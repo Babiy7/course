@@ -1,20 +1,22 @@
 {
-   "env": {
-      "browser": true,
-      "es6": true
-   },
-   "extends": ["airbnb", "prettier"],
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": ["airbnb", "prettier"],
 
-   "plugins": ["prettier"],
-   "rules": {
-      "no-unused-vars": "warn",
-      "no-console": "off",
-      "no-shadow": "off",
-      "no-alert": "off",
-      "no-plusplus": "off",
-      "one-var": "off",
-      "radix": "off",
-      "consistent-return": "off",
-      "no-restricted-globals": "off"
-   }
+    "plugins": ["prettier"],
+    "rules": {
+        "no-unused-vars": "warn",
+        "no-console": "off",
+        "no-shadow": "off",
+        "no-alert": "off",
+        "no-plusplus": "off",
+        "one-var": "off",
+        "radix": "off",
+        "consistent-return": "off",
+        "no-restricted-globals": "off",
+        "no-use-before-define": "off",
+        "no-param-reassign": "off"
+    }
 }

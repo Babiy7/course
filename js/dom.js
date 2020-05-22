@@ -52,3 +52,16 @@
 // const answer = prompt('Як ви відноситесь до техніки apple?');
 
 // prom.innerText = answer;
+
+//
+//
+// mobile events
+//
+//
+
+// touchstart
+// touchmove
+// touchend
+// touchenter
+// touchleave
+// touchcancel
